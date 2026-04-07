@@ -7,6 +7,10 @@
     {
       "source": "/graphic-design-course/:path*",
       "destination": "https://insd-graphic-design.vercel.app/graphic-design-course/:path*"
+    },
+    {
+      "source": "/interior-design-course/:path*",
+      "destination": "https://insd-interior-design.vercel.app/interior-design-course/:path*"
     }
   ]
 }
