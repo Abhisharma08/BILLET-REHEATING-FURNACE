@@ -13,8 +13,8 @@
       "destination": "https://insd-interior-design.vercel.app/interior-design-course/:path*"
     },
     {
-      "source": "/design-courses/:path*",
-      "destination": "https://insd-for-ctfy.vercel.app/design-courses/:path*"
+      "source": "/design-courses-partners/:path*",
+      "destination": "https://insd-for-ctfy.vercel.app/design-courses-partners/:path*"
     }
   ]
 }
