@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, ArrowLeft } from "lucide-react"
 
-const LOGO_URL = "https://res.cloudinary.com/ddqqlfsjp/image/upload/v1773820493/Final-Logo_exeo3n.png";
+const LOGO_URL = "https://res.cloudinary.com/ddqqlfsjp/image/upload/v1778481466/INSD-Logo_Horizontal_fhm4u5.jpg";
 
 export default function ThankYouPage() {
   return (
