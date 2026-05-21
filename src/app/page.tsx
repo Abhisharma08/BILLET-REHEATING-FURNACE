@@ -56,13 +56,14 @@ export default function LandingPage() {
               className="h-12 w-auto object-contain"
               priority
             />
-            <Badge className="bg-primary text-white border-none px-3 py-1">
-              Since 1987
-            </Badge>
+
           </Link>
 
           <div className="flex items-center gap-4">
-            <Button
+            <Badge className="bg-primary text-white border-none px-6 py-3 text-sm">
+              Since 1987
+            </Badge>
+            {/* <Button
               variant="ghost"
               className="hidden md:block text-white hover:bg-white/10"
               onClick={() => {
@@ -70,16 +71,16 @@ export default function LandingPage() {
               }}
             >
               Technical Consultation
-            </Button>
+            </Button> */}
 
-            <Button
+            {/* <Button
               className="bg-primary hover:bg-primary/90 text-white font-bold px-6"
               onClick={() => {
                 scrollToLeadForm()
               }}
             >
               Request Quote
-            </Button>
+            </Button> */}
           </div>
         </div>
       </nav>
@@ -87,7 +88,7 @@ export default function LandingPage() {
       <main className="pt-20 pb-24 lg:pb-0 w-full">
         {/* HERO SECTION */}
         <section className="relative overflow-hidden bg-background py-20 lg:py-24 w-full">
-          <div className="absolute inset-0 opacity-40">
+          <div className="absolute inset-0 opacity-100">
             <Image
               src={HERO_BG_URL}
               alt="Industrial Aluminium Furnace"
@@ -541,7 +542,7 @@ export default function LandingPage() {
         </section>
 
         {/* FINAL CTA */}
-        <section className="py-24 bg-primary relative overflow-hidden w-full">
+        <section className="py-24 bg-slate-700 relative overflow-hidden w-full">
           <div className="container mx-auto px-4 max-w-5xl text-center relative z-10 space-y-6">
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
               Ready to Upgrade Your Aluminium Processing Line?
@@ -552,12 +553,7 @@ export default function LandingPage() {
             </p>
 
             <div className="max-w-2xl mx-auto pt-6">
-              <LeadForm
-                compact
-                title="Ready to Upgrade Your Aluminium Processing Line?"
-                subtitle="Get a free technical consultation from our furnace engineers."
-                buttonText="GET FREE CONSULTATION NOW"
-              />
+              <LeadForm/>
             </div>
 
             <div className="pt-4 text-white/90 text-sm">

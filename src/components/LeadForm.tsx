@@ -28,7 +28,6 @@ type LeadFormProps = {
   buttonText?: string
   bottomText?: React.ReactNode
   buttonclassName?: string
-  compact?: boolean
 }
 
 const defaultValues: FormValues = {
@@ -82,30 +81,12 @@ function validateFinalStep(values: FormValues) {
   return errors
 }
 
-function validateCompact(values: FormValues) {
-  const errors: FormErrors = {}
-
-  const phoneDigits = values.phone.replace(/\D/g, "")
-
-  if (phoneDigits.length < 10 || phoneDigits.length > 12) {
-    errors.phone = "Enter a valid phone number."
-  }
-
-  if (!values.furnace_requirement) {
-    errors.furnace_requirement =
-      "Please select a furnace requirement."
-  }
-
-  return errors
-}
-
 export default function LeadForm({
   className,
   title = "Get a Free Technical Consultation",
   subtitle = "Discuss your furnace requirement with our engineers.",
   buttonText = "REQUEST FREE QUOTE NOW →",
   buttonclassName = "",
-  compact = false,
   bottomText = (
     <>
       Response within 4 working hours
@@ -123,8 +104,6 @@ export default function LeadForm({
   const [step, setStep] = useState(1)
 
   const router = useRouter()
-
-  const isTwoStepHero = !compact
 
   function handleChange(
     event: React.ChangeEvent<
@@ -183,9 +162,8 @@ export default function LeadForm({
   ) {
     event.preventDefault()
 
-    const validationErrors = compact
-      ? validateCompact(values)
-      : validateFinalStep(values)
+    const validationErrors =
+      validateFinalStep(values)
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
@@ -239,8 +217,8 @@ export default function LeadForm({
           value={values.lead_source}
         />
 
-        {/* HERO FORM STEP 1 */}
-        {isTwoStepHero && step === 1 && (
+        {/* STEP 1 */}
+        {step === 1 && (
           <>
             {/* Name */}
             <div className="space-y-1.5">
@@ -380,8 +358,8 @@ export default function LeadForm({
           </>
         )}
 
-        {/* HERO FORM STEP 2 */}
-        {isTwoStepHero && step === 2 && (
+        {/* STEP 2 */}
+        {step === 2 && (
           <>
             {/* Company Name */}
             <div className="space-y-1.5">
@@ -424,7 +402,9 @@ export default function LeadForm({
                 onChange={handleChange}
                 className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               >
-                <option value="">Select Designation</option>
+                <option value="">
+                  Select Designation
+                </option>
 
                 <option value="Owner">Owner</option>
 
@@ -434,6 +414,10 @@ export default function LeadForm({
 
                 <option value="Plant Manager">
                   Plant Manager
+                </option>
+
+                <option value="Operations Head">
+                  Operations Head
                 </option>
 
                 <option value="Other">Other</option>
@@ -483,104 +467,30 @@ export default function LeadForm({
                 </p>
               ) : null}
             </div>
+
+            {/* Submit Error */}
+            {errors.submit ? (
+              <p className="rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+                {errors.submit}
+              </p>
+            ) : null}
+
+            {/* Final Submit Button */}
+            <Button
+              type="submit"
+              className={`h-14 w-full bg-primary text-base font-bold text-white hover:bg-primary/90 ${buttonclassName}`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                buttonText
+              )}
+            </Button>
           </>
-        )}
-
-        {/* COMPACT FORM */}
-        {compact && (
-          <>
-            {/* Phone */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="phone"
-                className="text-sm font-semibold text-black"
-              >
-                Phone Number *
-              </label>
-
-              <input
-                id="phone"
-                name="phone"
-                value={values.phone}
-                onChange={handleChange}
-                placeholder="Your Phone Number"
-                autoComplete="tel"
-                inputMode="numeric"
-                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-              />
-
-              {errors.phone ? (
-                <p className="text-sm text-destructive">
-                  {errors.phone}
-                </p>
-              ) : null}
-            </div>
-
-            {/* Furnace Requirement */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="furnace_requirement"
-                className="text-sm font-semibold text-black"
-              >
-                Furnace Requirement *
-              </label>
-
-              <select
-                id="furnace_requirement"
-                name="furnace_requirement"
-                value={values.furnace_requirement}
-                onChange={handleChange}
-                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
-              >
-                <option value="">
-                  Select Requirement
-                </option>
-
-                <option value="Bogie Hearth Oven">
-                  Bogie Hearth Oven
-                </option>
-
-                <option value="Ageing Furnace">
-                  Ageing Furnace
-                </option>
-
-                <option value="Custom Requirement">
-                  Custom Requirement
-                </option>
-              </select>
-
-              {errors.furnace_requirement ? (
-                <p className="text-sm text-destructive">
-                  {errors.furnace_requirement}
-                </p>
-              ) : null}
-            </div>
-          </>
-        )}
-
-        {/* Submit Error */}
-        {errors.submit ? (
-          <p className="rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
-            {errors.submit}
-          </p>
-        ) : null}
-
-        {/* Final Submit Button */}
-        {(compact || step === 2) && (
-          <Button
-            type="submit"
-            className={`h-14 w-full bg-primary text-base font-bold text-white hover:bg-primary/90 ${buttonclassName}`}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 animate-spin" />
-                Processing...
-              </>
-            ) : (
-              buttonText
-            )}
-          </Button>
         )}
 
         {/* Bottom Text */}
