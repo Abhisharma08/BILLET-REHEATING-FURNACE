@@ -11,8 +11,9 @@ type FormValues = {
   designation: string
   email: string
   phone: string
-  furnace_requirement: string
-  production_capacity: string
+  capacity_required: string
+  process_required: string
+  heating_preference: string
   lead_source: string
 }
 
@@ -27,6 +28,7 @@ type LeadFormProps = {
   buttonText?: string
   bottomText?: React.ReactNode
   buttonclassName?: string
+  shortForm?: boolean
 }
 
 const defaultValues: FormValues = {
@@ -35,9 +37,10 @@ const defaultValues: FormValues = {
   designation: "",
   email: "",
   phone: "",
-  furnace_requirement: "",
-  production_capacity: "",
-  lead_source: "Aluminium Furnace LP",
+  capacity_required: "",
+  process_required: "",
+  heating_preference: "",
+  lead_source: "Bogie Hearth Furnace LP",
 }
 
 function validateStepOne(values: FormValues) {
@@ -57,9 +60,9 @@ function validateStepOne(values: FormValues) {
     errors.email = "Please enter a valid email address."
   }
 
-  if (!values.furnace_requirement) {
-    errors.furnace_requirement =
-      "Please select a furnace requirement."
+  if (!values.capacity_required) {
+    errors.capacity_required =
+      "Please select required capacity."
   }
 
   return errors
@@ -69,12 +72,18 @@ function validateFinalStep(values: FormValues) {
   const errors: FormErrors = {}
 
   if (values.company_name.trim().length < 2) {
-    errors.company_name = "Please enter your company name."
+    errors.company_name =
+      "Please enter your company name."
   }
 
-  if (!values.production_capacity) {
-    errors.production_capacity =
-      "Please select production capacity."
+  if (!values.process_required) {
+    errors.process_required =
+      "Please select process required."
+  }
+
+  if (!values.heating_preference) {
+    errors.heating_preference =
+      "Please select heating preference."
   }
 
   return errors
@@ -84,13 +93,12 @@ export default function LeadForm({
   className,
   title = "Get a Free Technical Consultation",
   subtitle = "Discuss your furnace requirement with our engineers.",
-  buttonText = "REQUEST FREE QUOTE NOW →",
+  buttonText = "REQUEST FREE QUOTE + TECHNICAL DRAWING →",
   buttonclassName = "",
+  shortForm = false,
   bottomText = (
     <>
-      Response within 4 working hours
-      <br />
-      Your details are kept confidential and used only for consultation purposes
+      🕐 Our furnace engineers respond within 4 working hours. <br />📞 +91 98113 04306 | +91 98119 54834
     </>
   ),
 }: LeadFormProps) {
@@ -140,7 +148,8 @@ export default function LeadForm({
         ...values,
         company_name: "",
         designation: "",
-        production_capacity: "",
+        process_required: "",
+        heating_preference: "",
       })
 
       setStep(2)
@@ -199,7 +208,6 @@ export default function LeadForm({
         className={`rounded-2xl border border-white/10 bg-white p-8 shadow-2xl md:p-10 ${className}`}
       >
         <div className="flex flex-col items-center text-center">
-          {/* Success Icon */}
           <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -217,32 +225,15 @@ export default function LeadForm({
             </svg>
           </div>
 
-          {/* Heading */}
           <h3 className="text-3xl font-bold text-primary md:text-4xl">
             Thank You For Your Interest
           </h3>
 
-          {/* Subtitle */}
           <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
             Our engineering team has received your
             requirement and will get in touch with
             you shortly with the next steps.
           </p>
-
-          {/* Trust Indicators */}
-          {/* <div className="mt-8 grid grid-cols-1 gap-4 text-sm text-muted-foreground md:grid-cols-3">
-            <div className="rounded-xl border border-border bg-slate-50 px-4 py-3">
-              35+ Years Experience
-            </div>
-
-            <div className="rounded-xl border border-border bg-slate-50 px-4 py-3">
-              ISO Certified Manufacturing
-            </div>
-
-            <div className="rounded-xl border border-border bg-slate-50 px-4 py-3">
-              Pan-India Installation Support
-            </div>
-          </div> */}
         </div>
       </div>
     )
@@ -252,11 +243,11 @@ export default function LeadForm({
     <div
       className={`rounded-2xl border border-white/10 bg-white p-6 shadow-2xl md:p-8 ${className}`}
     >
-      <h3 className="mb-2 text-3xl md:text-4xl font-bold text-primary leading-tight">
+      <h3 className="mb-2 text-3xl font-bold leading-tight text-primary md:text-4xl">
         {title}
       </h3>
 
-      <p className="mb-6 text-sm text-muted-foreground leading-relaxed">
+      <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
         {subtitle}
       </p>
 
@@ -353,39 +344,47 @@ export default function LeadForm({
 
             <div className="space-y-1.5">
               <label
-                htmlFor="furnace_requirement"
+                htmlFor="capacity_required"
                 className="text-sm font-semibold text-black"
               >
-                Furnace Requirement *
+                Capacity Required *
               </label>
 
               <select
-                id="furnace_requirement"
-                name="furnace_requirement"
-                value={values.furnace_requirement}
+                id="capacity_required"
+                name="capacity_required"
+                value={values.capacity_required}
                 onChange={handleChange}
                 className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               >
                 <option value="">
-                  Select Requirement
+                  Select Capacity
                 </option>
 
-                <option value="Bogie Hearth Oven">
-                  Bogie Hearth Oven
+                <option value="2 Ton">
+                  2 Ton
                 </option>
 
-                <option value="Ageing Furnace">
-                  Ageing Furnace
+                <option value="5 Ton">
+                  5 Ton
                 </option>
 
-                <option value="Custom Requirement">
-                  Custom Requirement
+                <option value="10 Ton">
+                  10 Ton
+                </option>
+
+                <option value="20 Ton">
+                  20 Ton
+                </option>
+
+                <option value="Custom Higher">
+                  Custom Higher
                 </option>
               </select>
 
-              {errors.furnace_requirement ? (
+              {errors.capacity_required ? (
                 <p className="text-sm text-destructive">
-                  {errors.furnace_requirement}
+                  {errors.capacity_required}
                 </p>
               ) : null}
             </div>
@@ -454,7 +453,9 @@ export default function LeadForm({
                   Select Designation
                 </option>
 
-                <option value="Owner">Owner</option>
+                <option value="Owner">
+                  Owner
+                </option>
 
                 <option value="Purchase Head">
                   Purchase Head
@@ -464,53 +465,102 @@ export default function LeadForm({
                   Plant Manager
                 </option>
 
-                <option value="Operations Head">
-                  Operations Head
+                <option value="Engineer">
+                  Engineer
                 </option>
-
-                <option value="Other">Other</option>
               </select>
             </div>
 
             <div className="space-y-1.5">
               <label
-                htmlFor="production_capacity"
+                htmlFor="process_required"
                 className="text-sm font-semibold text-black"
               >
-                Production Capacity Needed *
+                Process Required *
               </label>
 
               <select
-                id="production_capacity"
-                name="production_capacity"
-                value={values.production_capacity}
+                id="process_required"
+                name="process_required"
+                value={values.process_required}
                 onChange={handleChange}
                 className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
               >
                 <option value="">
-                  Select Production Capacity
+                  Select Process
                 </option>
 
-                <option value="<500 kg">
-                  Less than 500 kg
+                <option value="Stress Relieving">
+                  Stress Relieving
                 </option>
 
-                <option value="500 kg–5 Ton">
-                  500 kg – 5 Ton
+                <option value="Annealing">
+                  Annealing
                 </option>
 
-                <option value="5–20 Ton">
-                  5 – 20 Ton
+                <option value="Normalising">
+                  Normalising
                 </option>
 
-                <option value="20+ Ton">
-                  20+ Ton
+                <option value="Tempering">
+                  Tempering
+                </option>
+
+                <option value="Pre-Heating">
+                  Pre-Heating
+                </option>
+
+                <option value="Solution Treatment">
+                  Solution Treatment
                 </option>
               </select>
 
-              {errors.production_capacity ? (
+              {errors.process_required ? (
                 <p className="text-sm text-destructive">
-                  {errors.production_capacity}
+                  {errors.process_required}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="space-y-1.5">
+              <label
+                htmlFor="heating_preference"
+                className="text-sm font-semibold text-black"
+              >
+                Heating Preference *
+              </label>
+
+              <select
+                id="heating_preference"
+                name="heating_preference"
+                value={values.heating_preference}
+                onChange={handleChange}
+                className="flex h-12 w-full rounded-xl border border-input bg-white px-4 py-2 text-sm text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+              >
+                <option value="">
+                  Select Heating Preference
+                </option>
+
+                <option value="Gas">
+                  Gas
+                </option>
+
+                <option value="Oil">
+                  Oil
+                </option>
+
+                <option value="Electrical">
+                  Electrical
+                </option>
+
+                <option value="Any">
+                  Any
+                </option>
+              </select>
+
+              {errors.heating_preference ? (
+                <p className="text-sm text-destructive">
+                  {errors.heating_preference}
                 </p>
               ) : null}
             </div>
