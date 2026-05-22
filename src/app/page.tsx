@@ -508,19 +508,19 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {[
                 {
-                  icon: <Factory className="h-10 w-10 text-secondary" />,
+                  icon: <Factory className="h-10 w-10 text-primary" />,
                   text: "35+ Years in Industrial Furnace Manufacturing",
                 },
                 {
-                  icon: <Building2 className="h-10 w-10 text-secondary" />,
+                  icon: <Building2 className="h-10 w-10 text-primary" />,
                   text: "1987 — Established in Faridabad, Haryana",
                 },
                 {
-                  icon: <ShieldCheck className="h-10 w-10 text-secondary" />,
+                  icon: <ShieldCheck className="h-10 w-10 text-primary" />,
                   text: "ISO 9001:2015 & ISO 14001:2015 Certified",
                 },
                 {
-                  icon: <Wrench className="h-10 w-10 text-secondary" />,
+                  icon: <Wrench className="h-10 w-10 text-primary" />,
                   text: "Pan-India Installation & Service Support",
                 },
               ].map((item, i) => (

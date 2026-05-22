@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { submitToHubSpot } from "@/app/actions/hubspot"
@@ -103,7 +102,7 @@ export default function LeadForm({
 
   const [step, setStep] = useState(1)
 
-  const router = useRouter()
+  const [isSuccess, setIsSuccess] = useState(false)
 
   function handleChange(
     event: React.ChangeEvent<
@@ -181,7 +180,7 @@ export default function LeadForm({
         console.warn("CRM Sync Issue:", result.error)
       }
 
-      router.push("/thank-you")
+      setIsSuccess(true)
     } catch (error) {
       console.error("Submission Exception:", error)
 
@@ -192,6 +191,61 @@ export default function LeadForm({
 
       setIsSubmitting(false)
     }
+  }
+
+  if (isSuccess) {
+    return (
+      <div
+        className={`rounded-2xl border border-white/10 bg-white p-8 shadow-2xl md:p-10 ${className}`}
+      >
+        <div className="flex flex-col items-center text-center">
+          {/* Success Icon */}
+          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-10 w-10 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+
+          {/* Heading */}
+          <h3 className="text-3xl font-bold text-primary md:text-4xl">
+            Thank You For Your Interest
+          </h3>
+
+          {/* Subtitle */}
+          <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
+            Our engineering team has received your
+            requirement and will get in touch with
+            you shortly with the next steps.
+          </p>
+
+          {/* Trust Indicators */}
+          {/* <div className="mt-8 grid grid-cols-1 gap-4 text-sm text-muted-foreground md:grid-cols-3">
+            <div className="rounded-xl border border-border bg-slate-50 px-4 py-3">
+              35+ Years Experience
+            </div>
+
+            <div className="rounded-xl border border-border bg-slate-50 px-4 py-3">
+              ISO Certified Manufacturing
+            </div>
+
+            <div className="rounded-xl border border-border bg-slate-50 px-4 py-3">
+              Pan-India Installation Support
+            </div>
+          </div> */}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -220,7 +274,6 @@ export default function LeadForm({
         {/* STEP 1 */}
         {step === 1 && (
           <>
-            {/* Name */}
             <div className="space-y-1.5">
               <label
                 htmlFor="name"
@@ -246,7 +299,6 @@ export default function LeadForm({
               ) : null}
             </div>
 
-            {/* Email */}
             <div className="space-y-1.5">
               <label
                 htmlFor="email"
@@ -273,7 +325,6 @@ export default function LeadForm({
               ) : null}
             </div>
 
-            {/* Phone */}
             <div className="space-y-1.5">
               <label
                 htmlFor="phone"
@@ -300,7 +351,6 @@ export default function LeadForm({
               ) : null}
             </div>
 
-            {/* Furnace Requirement */}
             <div className="space-y-1.5">
               <label
                 htmlFor="furnace_requirement"
@@ -361,7 +411,6 @@ export default function LeadForm({
         {/* STEP 2 */}
         {step === 2 && (
           <>
-            {/* Company Name */}
             <div className="space-y-1.5">
               <label
                 htmlFor="company_name"
@@ -386,7 +435,6 @@ export default function LeadForm({
               ) : null}
             </div>
 
-            {/* Designation */}
             <div className="space-y-1.5">
               <label
                 htmlFor="designation"
@@ -424,7 +472,6 @@ export default function LeadForm({
               </select>
             </div>
 
-            {/* Production Capacity */}
             <div className="space-y-1.5">
               <label
                 htmlFor="production_capacity"
@@ -468,14 +515,12 @@ export default function LeadForm({
               ) : null}
             </div>
 
-            {/* Submit Error */}
             {errors.submit ? (
               <p className="rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
                 {errors.submit}
               </p>
             ) : null}
 
-            {/* Final Submit Button */}
             <Button
               type="submit"
               className={`h-14 w-full bg-primary text-base font-bold text-white hover:bg-primary/90 ${buttonclassName}`}
@@ -493,7 +538,6 @@ export default function LeadForm({
           </>
         )}
 
-        {/* Bottom Text */}
         <p className="text-center text-xs leading-relaxed text-muted-foreground">
           {bottomText}
         </p>
