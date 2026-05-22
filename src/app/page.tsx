@@ -7,44 +7,29 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
   ShieldCheck,
+  Flame,
   Factory,
   Settings,
+  CheckCircle2,
   Phone,
   ArrowRight,
-  Flame,
-  Wrench,
-  BarChart3,
-  CheckCircle2,
   Building2,
+  Wrench,
   Cpu,
-  Hammer,
-  Cog,
-  Truck,
-  ClipboardList,
-  MessageCircle,
-  Dumbbell as DumbbellIcon,
-  RotateCcw as RotateCcwIcon,
-  FlaskConical as FlaskIcon,
+  BarChart3,
 } from "lucide-react"
-
 import LeadForm from "@/components/LeadForm"
 import SectionHeader from "@/components/SectionHeader"
 
-const LOGO_URL =
-  "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg"
-
-const HERO_IMAGE =
-  "https://res.cloudinary.com/ddqqlfsjp/image/upload/v1774679097/P1510960_1_1_1_wrknkg.jpg"
-
-const FURNACE_IMAGE =
-  "https://res.cloudinary.com/ddqqlfsjp/image/upload/v1774679097/P1510960_1_1_1_wrknkg.jpg"
+const LOGO_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg"
+const HERO_BG_URL = "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop"
+const DEFAULT_PLACEHOLDER = "https://picsum.photos/seed/furnace/1200/900"
 
 export default function LandingPage() {
   const scrollToLeadForm = () => {
     const candidates = [
       document.getElementById("top-form-desktop"),
       document.getElementById("top-form-mobile"),
-      document.getElementById("bottom-form"),
     ].filter(Boolean) as HTMLElement[]
 
     const target =
@@ -58,662 +43,732 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden bg-white">
-      {/* NAVBAR */}
-      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-slate-700 backdrop-blur-md">
-        <div className="container mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-4">
-            <Image
-              src={LOGO_URL}
-              alt="Continental Furnaces"
-              width={180}
-              height={60}
-              className="h-12 w-auto object-contain"
-              priority
-            />
-          </Link>
+<div className="flex flex-col min-h-screen overflow-x-hidden bg-white">
+  {/* URGENCY BAR */}
+  {/* <div className="fixed top-0 z-[60] w-full bg-primary py-2 text-center text-sm font-semibold text-white">
+    🔥 Limited Slots Open — Get Your Custom Furnace Quote Within 4 Working Hours
+    <span className="mx-3 hidden md:inline">|</span>
+    <span className="block md:inline">
+      Call Now: +91 98113 04306
+    </span>
+  </div> */}
 
-          <div className="flex items-center gap-3">
-            <Badge className="hidden border-none bg-primary px-5 py-2 text-sm text-white md:flex">
-              35 Years of Trust
-            </Badge>
+{/* NAVBAR */}
+<nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-slate-700/95 backdrop-blur-md overflow-x-hidden">
+  <div className="container mx-auto flex h-16 md:h-24 max-w-7xl items-center justify-between px-4">
+    
+    {/* LEFT */}
+    <div className="flex items-center gap-3 md:gap-5">
 
-            <a
-              href="tel:+919811304306"
-              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
-            >
-              <Phone className="h-4 w-4" />
-              +91 98113 04306
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      <main className="w-full pt-20 pb-24 lg:pb-0">
-        {/* HERO */}
-        <section className="relative overflow-hidden bg-slate-700 py-20 lg:py-24">
-          <div className="absolute inset-0">
-            <Image
-              src={HERO_IMAGE}
-              alt="Bogie Hearth Furnace"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07111F]/95 via-[#07111F]/90 to-[#07111F]/70" />
-
-          <div className="container relative z-10 mx-auto max-w-7xl px-4">
-            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[60%_40%] lg:gap-16">
-              {/* LEFT */}
-              <div className="space-y-8 text-white">
-                <div className="space-y-5">
-                  <h1 className="max-w-4xl text-xl font-bold leading-tight md:text-5xl">
-                    Bogie Hearth Furnace — India&apos;s Most Reliable Car-Bottom
-                    Furnace for Heavy Heat Treatment
-                  </h1>
-
-                  <h2 className="max-w-3xl text-lg font-semibold leading-relaxed text-primary md:text-2xl">
-                    2 to 20 Tons Capacity | Up to 1,200°C 
-                    <br /> | ±5°C Uniformity | Gas / Oil / Electric | Custom-Built
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                  {[
-                    {
-                      icon: <Factory className="h-5 w-5 text-primary" />,
-                      text: "35 Years of Engineering Trust",
-                    },
-                    {
-                      icon: (
-                        <ShieldCheck className="h-5 w-5 text-primary" />
-                      ),
-                      text: "ISO 9001:2015 & 14001:2015 Certified",
-                    },
-                    {
-                      icon: <Settings className="h-5 w-5 text-primary" />,
-                      text: "Custom-Built for Your Load Size & Industry",
-                    },
-                  ].map((item, i) => (
-                    <div
-                      key={i}
-                      className="rounded-2xl border border-white/15 bg-white/5 p-5 backdrop-blur-sm"
-                    >
-                      <div className="flex items-start gap-3">
-                        {item.icon}
-
-                        <p className="text-sm font-medium leading-relaxed text-white/90">
-                          {item.text}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* STICKY FORM */}
-              <div
-                className="hidden lg:block sticky top-28"
-                id="top-form-desktop"
-              >
-
-
-                  <LeadForm
-                  />
-
-                  {/* <div className="mt-6 border-t border-white/10 pt-5">
-                    <div className="flex items-start gap-3 text-sm text-white/80">
-                      <Phone className="mt-0.5 h-4 w-4 text-primary" />
-
-                      <p>
-                        Our furnace engineers respond within 4 working hours
-                        <br />
-                        +91 98113 04306 | +91 98119 54834
-                      </p>
-                    </div>
-                  </div> */}
-                </div>
-              </div>
-            </div>
-        </section>
-
-        {/* MOBILE FORM */}
-        <section
-          className="bg-slate-700 px-4 pb-10 lg:hidden"
-          id="top-form-mobile"
-        >
-            <LeadForm
-            />
-         
-        </section>
-
-        {/* PRODUCT INTRO */}
-        <section className="bg-white py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[40%_60%]">
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-                <Image
-                  src={FURNACE_IMAGE}
-                  alt="Bogie Hearth Furnace"
-                  width={800}
-                  height={700}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div>
-                <SectionHeader
-                  title="What Is a Bogie Hearth Furnace — And Why Do Heavy Industries Rely on It?"
-                  subtitle=""
-                  centered={false}
-                />
-
-                <div className="space-y-5 text-lg leading-relaxed text-black/80">
-                  <p>
-                    The Bogie Hearth Furnace — also known as a Car Bottom
-                    Furnace — is engineered specifically for the heat treatment
-                    of large, heavy, and bulky components that cannot be
-                    processed in conventional batch furnaces.
-                  </p>
-
-                  <p>
-                    Its movable bogie (carriage) hearth enables smooth loading
-                    and unloading of heavy jobs using an overhead crane or
-                    trolley — making it the preferred choice for foundries,
-                    forging plants, steel fabrication units, and heat treatment
-                    shops across India.
-                  </p>
-
-                  <p>
-                    Designed with advanced refractory insulation, high-grade
-                    steel fabrication, and precision PLC temperature controls —
-                    Continental&apos;s Bogie Hearth Furnace delivers excellent
-                    temperature uniformity, superior energy efficiency, and high
-                    productivity across every cycle.
-                  </p>
-                </div>
-
-                <div className="mt-8 rounded-2xl border-l-4 border-primary bg-slate-100 p-6">
-                  <p className="text-lg font-semibold italic leading-relaxed text-black">
-                    “When the component is too heavy, too large, or too critical
-                    for a standard furnace — the Bogie Hearth is the answer.”
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PROBLEMS */}
-        <section className="bg-slate-700 py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <SectionHeader
-              title="Is Your Current Heat Treatment Process Causing These Problems?"
-              subtitle=""
-              light
-            />
-
-            <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-              {[
-                {
-                  title: "Loading & Handling Nightmare",
-                  desc: "Large castings, heavy fabrications, and forged components cannot be loaded into fixed-chamber furnaces without damaging the charge or risking operator safety.",
-                  icon: <Truck className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Temperature Non-Uniformity = Rejected Parts",
-                  desc: "Hotspots and cold zones in standard furnaces cause inconsistent stress relieving and annealing results — leading to part rejections and quality failures.",
-                  icon: <Flame className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "High Operating Costs, No Process Records",
-                  desc: "Older furnaces waste fuel every cycle. Without PLC control and thermocouple logging, there is no traceability or process monitoring.",
-                  icon: <BarChart3 className="h-8 w-8 text-primary" />,
-                },
-              ].map((item, i) => (
-                <Card
-                  key={i}
-                  className="rounded-3xl border border-white/10 bg-black/20"
-                >
-                  <CardContent className="space-y-5 p-8">
-                    {item.icon}
-
-                    <h3 className="text-2xl font-bold leading-snug text-white">
-                      {item.title}
-                    </h3>
-
-                    <p className="leading-relaxed text-white/80 italic">
-                      {item.desc}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURES */}
-        <section className="bg-white py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <SectionHeader
-              title="Continental Bogie Hearth Furnace — 6 Engineering Advantages Built Into Every Unit"
-              subtitle=""
-            />
-
-            <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
-              {[
-                {
-                  title: "Movable Bogie Hearth",
-                  desc: "Car-bottom type bogie runs on heavy-duty wheels for smooth movement and effortless loading/unloading using overhead crane or trolley.",
-                  icon: <Wrench className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Flexible Heating Modes",
-                  desc: "Available in Gas, Oil, or Electrical heating systems — engineered for maximum efficiency and consistent long-cycle performance.",
-                  icon: <Flame className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Rugged Construction",
-                  desc: "Heavy-duty MS structure with reinforced frames, refractory lining, and ceramic fibre insulation for long operational life.",
-                  icon: <Hammer className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Temperature Control & Uniformity",
-                  desc: "PLC-based temperature control with thermocouple feedback ensures ±5°C chamber uniformity every cycle.",
-                  icon: <Cpu className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Safety & Reliability",
-                  desc: "Robust sealing systems minimise heat leakage while ensuring long service life and reduced downtime.",
-                  icon: <ShieldCheck className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Fully Customisable",
-                  desc: "Every furnace is designed according to your load size, process, atmosphere requirement, and production capacity.",
-                  icon: <ClipboardList className="h-8 w-8 text-primary" />,
-                },
-              ].map((item, i) => (
-                <Card
-                  key={i}
-                  className="rounded-3xl border border-slate-200 bg-slate-500 shadow-lg"
-                >
-                  <CardContent className="flex gap-5 p-8">
-                    <div>{item.icon}</div>
-
-                    <div className="space-y-3">
-                      <h3 className="text-2xl font-bold text-white">
-                        {item.title}
-                      </h3>
-
-                      <p className="leading-relaxed text-white/90 italic">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* TECH SPECS */}
-        <section className="bg-slate-700 py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <SectionHeader
-              title="Technical Specifications"
-              subtitle=""
-              light
-            />
-
-            <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-[65%_35%]">
-              <div className="overflow-hidden rounded-3xl border border-white/10">
-                <table className="w-full text-left">
-                  <tbody>
-                    {[
-                      [
-                        "Capacity Range",
-                        "2 to 20 Tons (custom-built higher capacities available)",
-                      ],
-                      ["Operating Temperature", "Up to 1,200°C"],
-                      ["Mode of Heating", "Gas / Oil / Electrical Fired"],
-                      [
-                        "Construction Material",
-                        "Heavy-duty MS frame with refractory/ceramic fibre lining",
-                      ],
-                      [
-                        "Bogie Drive",
-                        "Manual or Motorised depending on capacity",
-                      ],
-                      [
-                        "Controls",
-                        "Digital PID/PLC-based temperature control",
-                      ],
-                      [
-                        "Temperature Uniformity",
-                        "±5°C across the chamber",
-                      ],
-                      [
-                        "Atmosphere",
-                        "Air atmosphere standard; inert gas purging available",
-                      ],
-                    ].map((row, i) => (
-                      <tr
-                        key={i}
-                        className="border-b border-white/10 last:border-none"
-                      >
-                        <td className="w-1/3 bg-black/20 p-5 font-semibold text-white">
-                          {row[0]}
-                        </td>
-
-                        <td className="p-5 text-white/90">{row[1]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="space-y-6">
-                <div className="overflow-hidden rounded-3xl shadow-2xl">
-                  <Image
-                    src={FURNACE_IMAGE}
-                    alt="Installed Bogie Hearth Furnace"
-                    width={700}
-                    height={700}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-
-                <Button className="h-14 w-full bg-primary text-base font-bold text-white hover:bg-primary/90">
-                  Download Full Technical Datasheet
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* APPLICATIONS */}
-        <section className="bg-white py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <SectionHeader
-              title="What Can You Process in a Continental Bogie Hearth Furnace?"
-              subtitle=""
-            />
-
-            <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 text-primary">
-              {[
-                {
-                  title: "Castings & Forgings",
-                  icon: <DumbbellIcon className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Welded Fabrications",
-                  icon: <Factory className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Large Steel Parts",
-                  icon: <Hammer className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Pre-Heating",
-                  icon: <RotateCcwIcon className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Solution Treatment",
-                  icon: <FlaskIcon className="h-8 w-8 text-primary" />,
-                },
-                {
-                  title: "Tool & Precision Parts",
-                  icon: <Wrench className="h-8 w-8 text-primary" />,
-                },
-              ].map((item, i) => (
-                <Card
-                  key={i}
-                  className="rounded-3xl border border-slate-200 shadow-md"
-                >
-                  <CardContent className="space-y-4 p-8 bg-white">
-                    <div className="text-4xl">{item.icon}</div>
-
-                    <h3 className="text-2xl font-bold text-black">
-                      {item.title}
-                    </h3>
-
-                    <p className="leading-relaxed text-black/70 italic">
-                      Heavy-duty heat treatment applications requiring precise
-                      and uniform temperature control for large industrial
-                      components.
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ADVANTAGES */}
-        <section className="bg-slate-100 py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <SectionHeader
-              title="7 Reasons Plant Owners and Purchase Heads Choose Continental's Bogie Hearth Furnace"
-              subtitle=""
-            />
-
-            <div className="mt-14 space-y-5 ">
-              {[
-                "Proven performance across foundries, steel plants, forging units, and fabrication workshops",
-                "Designed specifically for large and heavy components not possible in standard furnaces",
-                "Movable bogie hearth ensures complete ease of material handling and loading",
-                "Uniform heating ensures consistent metallurgical results batch after batch",
-                "Low operating cost due to ceramic fibre insulation and optimised heating",
-                "Flexible furnace design tailored for capacities and process requirements",
-                "Strong, durable construction designed for continuous industrial use",
-              ].map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 rounded-2xl bg-white p-6 shadow-sm"
-                >
-                  <CheckCircle2 className="mt-1 h-6 w-6 text-primary" />
-
-                  <p className="text-lg leading-relaxed text-black/80">
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* INDUSTRIES */}
-        <section className="bg-slate-700 py-20">
-          <div className="container mx-auto max-w-7xl px-4">
-            <SectionHeader
-              title="Industries We Serve"
-              subtitle=""
-              light
-            />
-
-            <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[
-                "Foundries & Casting Plants",
-                "Forging & Press Shops",
-                "Steel Fabrication & Heavy Engineering",
-                "Metal Processing & Surface Treatment",
-                "Automotive Component Manufacturers",
-                "Heat Treatment Contractors",
-              ].map((item, i) => (
-                <Card
-                  key={i}
-                  className="rounded-3xl border border-white/10 bg-black/20"
-                >
-                  <CardContent className="space-y-4 p-8">
-                    <Cog className="h-8 w-8 text-primary" />
-
-                    <h3 className="text-2xl font-bold text-white">{item}</h3>
-
-                    <p className="leading-relaxed text-white/80 italic">
-                      Custom-built heavy heat treatment solutions engineered for
-                      demanding industrial applications.
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-{/* TRUST */}
-<section className="bg-white py-20">
-  <div className="container mx-auto max-w-7xl px-4">
-    <SectionHeader
-      title="35+ Years of Industrial Furnace Engineering"
-      subtitle=""
-    />
-
-    {/* STATS */}
-    <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {[
-        {
-          title: "Years in Operation",
-          value: "35+ Since 1987",
-        },
-        {
-          title: "Quality Certification",
-          value: "ISO 9001:2015",
-        },
-        {
-          title: "Environmental",
-          value: "ISO 14001:2015",
-        },
-        {
-          title: "Manufacturing Base",
-          value: "Faridabad, Haryana",
-        },
-      ].map((item, i) => (
-        <Card
-          key={i}
-          className="rounded-3xl border border-slate-200 bg-slate-700 shadow-sm"
-        >
-          <CardContent className="space-y-3 p-8 text-center">
-            <h3 className="text-lg font-semibold text-white">
-              {item.title}
-            </h3>
-
-            <p className="text-2xl font-bold text-primary">
-              {item.value}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
+      {/* Logo */}
+      <Link href="/" className="flex items-center">
+        <Image
+          src={LOGO_URL}
+          alt="Continental Furnaces"
+          width={180}
+          height={55}
+          className="h-10 md:h-14 w-auto object-contain"
+          priority
+        />
+      </Link>
     </div>
 
-    {/* IMAGE BACKGROUND BLOCK */}
-    <div className="relative mt-14 overflow-hidden rounded-3xl shadow-2xl">
+    {/* RIGHT */}
+    <div className="hidden lg:flex items-center gap-5">
+      <div className="text-right">
+
+        <p className="text-xs text-white/60">
+          ISO 9001:2015 &
+          <br />ISO 14001:2015 Certified
+        </p>
+      </div>
+
+      <Button
+        className="bg-primary hover:bg-primary/90 text-white font-bold px-7 h-12 rounded-xl"
+        onClick={() => {
+          scrollToLeadForm()
+        }}
+      >
+        GET FREE QUOTE →
+      </Button>
+    </div>
+  </div>
+</nav>
+
+  <main className="pt-[64px] md:pt-[96px] pb-24 lg:pb-0 w-full">
+    {/* HERO SECTION */}
+    <section className="relative overflow-hidden bg-background py-20 lg:py-28 w-full">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src={FURNACE_IMAGE}
-          alt="Continental Furnace Manufacturing"
+          src={HERO_BG_URL}
+          alt="Industrial Aluminium Furnace"
           fill
           className="object-cover"
+          priority
         />
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/75" />
 
-      {/* Content */}
-      <div className="relative z-10 flex min-h-[500px] flex-col justify-end p-8 md:p-12">
-        <div className="max-w-3xl space-y-6">
-          <p className="text-xl leading-relaxed text-white">
-            Every Continental Bogie Hearth Furnace is engineered,
-            fabricated, and tested at our Faridabad manufacturing
-            facility before dispatch — with full installation and
-            commissioning support at your plant.
+      {/* Grid Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
+
+      <div className="container relative z-10 mx-auto max-w-7xl px-4">
+        <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[54%_38%] xl:gap-24">
+          {/* LEFT CONTENT */}
+          <div className="space-y-8 text-white pt-4">
+
+            {/* Main Heading */}
+            <div className="space-y-5">
+              <h1 className="max-w-5xl text-3xl font-bold leading-[1.05] tracking-tight text-white md:text-4xl">
+              Bogie Hearth Furnace — 
+              <br /> India's Most Reliable Car-Bottom Furnace for Heavy Heat Treatment
+              </h1>
+
+              <h2 className="max-w-4xl text-2xl font-semibold leading-relaxed text-secondary md:text-2xl">
+              2 to 20 Tons Capacity | Up to 1,200°C | 
+              <br /> ±5°C Uniformity | Gas / Oil / Electric | 
+              <br />Custom-Built|
+              </h2>
+            </div>
+
+        {/* TRUST TILES */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 max-w-5xl">
+          {[
+            {
+              title: "35 Years of Engineering Trust",
+              icon: "🏆",
+            },
+            {
+              title: "ISO 9001:2015 & 14001:2015 Certified",
+              icon: "✅",
+            },
+            {
+              title: "Custom-Built for Your Load Size & Industry",
+              icon: "⚙️",
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="rounded-2xl border border-white/10 bg-card/70 p-6 backdrop-blur-sm text-center"
+            >
+              <div className="flex flex-col items-center gap-4">
+                {/* ICON */}
+                <div className="text-4xl leading-none">
+                  {item.icon}
+                </div>
+
+                {/* TEXT */}
+                <h3 className="text-base md:text-lg font-bold leading-snug text-white">
+                  {item.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+        </div>
+
+          {/* RIGHT FORM */}
+          <div
+            className="lg:sticky lg:top-32"
+            id="top-form-desktop"
+          >
+            <LeadForm            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* SECTION 2 — PRODUCT INTRODUCTION */}
+<section className="py-24 bg-white w-full">
+  <div className="container mx-auto max-w-7xl px-4">
+    <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-14 items-center">
+      
+      {/* LEFT IMAGE */}
+      <div className="relative">
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 shadow-2xl">
+          <Image
+            src={DEFAULT_PLACEHOLDER}
+            alt="Bogie Hearth Furnace"
+            width={900}
+            height={900}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      {/* RIGHT CONTENT */}
+      <div className="space-y-8">
+        
+        {/* EYEBROW */}
+        <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+          Product Introduction
+        </div>
+
+        {/* HEADING */}
+        <h2 className="text-3xl md:text-4xl font-bold leading-tight text-primary">
+          What Is a Bogie Hearth Furnace — And Why Do Heavy Industries Rely on It?
+        </h2>
+
+        {/* BODY */}
+        <div className="space-y-6 text-lg leading-relaxed text-slate-700">
+          <p>
+            The Bogie Hearth Furnace — also known as a Car Bottom Furnace — is engineered specifically for the heat treatment of large, heavy, and bulky components that cannot be processed in conventional batch furnaces.
           </p>
 
-          <div className="flex flex-wrap gap-4">
-            <Badge className="bg-primary px-5 py-3 text-white">
-              ISO 9001:2015
-            </Badge>
+          <p>
+            Its movable bogie (carriage) hearth enables smooth loading and unloading of heavy jobs using an overhead crane or trolley — making it the preferred choice for foundries, forging plants, steel fabrication units, and heat treatment shops across India.
+          </p>
 
-            <Badge className="bg-primary px-5 py-3 text-white">
-              ISO 14001:2015
-            </Badge>
-          </div>
+          <p>
+            Designed with advanced refractory insulation, high-grade steel fabrication, and precision PLC temperature controls — Continental's Bogie Hearth Furnace delivers excellent temperature uniformity, superior energy efficiency, and high productivity across every cycle.
+          </p>
+        </div>
+
+        {/* HIGHLIGHT BOX */}
+        <div className="border-l-4 border-secondary bg-secondary/10 rounded-r-2xl p-6">
+          <p className="text-lg font-semibold leading-relaxed text-primary italic">
+            “When the component is too heavy, too large, or too critical for a standard furnace — the Bogie Hearth is the answer.”
+          </p>
         </div>
       </div>
     </div>
   </div>
 </section>
-        {/* FINAL CTA */}
-        <section
-          className="relative overflow-hidden bg-slate-700 py-24"
-          id="bottom-form"
-        >
-          <div className="container relative z-10 mx-auto max-w-5xl px-4 text-center">
-            <div className="space-y-6">
-              <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl">
-                Need a Bogie Hearth Furnace for Your Plant? Tell Us Your
-                Requirement.
-              </h2>
 
-              <p className="mx-auto max-w-3xl text-xl leading-relaxed text-white/90">
-                Our furnace engineers will prepare a custom technical proposal
-                with capacity, specifications, and indicative pricing within 24
-                hours — no obligation.
+{/* SECTION 3 — PROBLEM (Pain Points) */}
+<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
+  {/* Background Grid */}
+  <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
+
+  <div className="container relative z-10 mx-auto max-w-7xl px-4">
+    
+    {/* HEADING */}
+    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
+      Is Your Current Heat Treatment Process Causing These Problems?
+    </h2>
+
+    {/* CARDS */}
+    <div className="mt-14 grid grid-cols-1 gap-7 lg:grid-cols-3">
+      {[
+        {
+          title: "Loading & Handling Nightmare",
+          desc: "Large castings, heavy fabrications, and forged components cannot be loaded into fixed-chamber furnaces without damaging the charge or risking operator safety. Every loading becomes a bottleneck.",
+        },
+        {
+          title: "Temperature Non-Uniformity = Rejected Parts",
+          desc: "Hotspots and cold zones in standard furnaces cause inconsistent stress relieving and annealing results — leading to part rejections, rework costs, and quality audit failures on critical components.",
+        },
+        {
+          title: "High Operating Costs, No Process Records",
+          desc: "Poorly insulated, older furnaces waste 25–35% of fuel every cycle. Without digital PLC control and thermocouple-based logging, there is no traceability, no energy monitoring, and no data for quality certification.",
+        },
+      ].map((item, i) => (
+        <Card
+          key={i}
+          className="rounded-3xl border border-white/10 bg-slate-700 shadow-2xl"
+        >
+          <CardContent className="p-8 space-y-5">
+            <div className="h-1.5 w-20 rounded-full bg-primary" />
+
+            <h3 className="text-2xl font-bold leading-snug text-white">
+              {item.title}
+            </h3>
+
+            <p className="text-lg leading-relaxed text-white/80 italic">
+              {item.desc}
+            </p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* SECTION 4 — KEY FEATURES */}
+<section className="py-24 bg-white w-full">
+  <div className="container mx-auto max-w-7xl px-4">
+
+    {/* HEADING */}
+    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
+      Continental Bogie Hearth Furnace — 6 Engineering Advantages Built Into Every Unit
+    </h2>
+
+    {/* FEATURES GRID */}
+    <div className="mt-16 grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
+      {[
+        {
+          icon: "🔧",
+          title: "Movable Bogie Hearth",
+          subtitle: "The defining feature that makes heavy heat treatment possible",
+          desc: "Car-bottom type bogie runs on heavy-duty wheels for smooth, effortless movement. Enables easy loading and unloading of bulky components using overhead crane or trolley — zero manual handling risk.",
+        },
+        {
+          icon: "🔥",
+          title: "Flexible Heating Modes",
+          subtitle: "Run on the fuel your plant already uses",
+          desc: "Available in Gas, Oil, or Electrical heating systems. Each configuration is designed for maximum fuel efficiency and consistent performance across long production cycles.",
+        },
+        {
+          icon: "🏗️",
+          title: "Rugged Construction",
+          subtitle: "Built for continuous industrial use, not occasional batch runs",
+          desc: "Fabricated from heavy-duty MS structure with reinforced frames. High-quality refractory lining and ceramic fibre insulation minimise heat loss and extend furnace operational life significantly.",
+        },
+        {
+          icon: "📊",
+          title: "Temperature Control & Uniformity",
+          subtitle: "±5°C across the entire chamber — every cycle",
+          desc: "Automatic digital/PLC-based temperature controllers with thermocouple feedback. Multiple burners/heating elements ensure ±5°C temperature uniformity — critical for stress relieving and annealing of precision components.",
+        },
+        {
+          icon: "🛡️",
+          title: "Safety & Reliability",
+          subtitle: "Engineered for long service life with minimal downtime",
+          desc: "Robust bogie sealing system prevents heat leakage around the chamber door. Designed for long service life with minimal maintenance requirements — reducing your total cost of ownership.",
+        },
+        {
+          icon: "✏️",
+          title: "Fully Customisable",
+          subtitle: "No standard size. Every furnace is built to your specification.",
+          desc: "Available in a wide range of sizes and capacities as per customer requirements. Furnace design tailored for your specific load size, capacity, process, and industrial application — including inert gas purging provision.",
+        },
+      ].map((item, i) => (
+        <Card
+          key={i}
+          className="rounded-3xl border border-slate-200 bg-slate-50 shadow-xl"
+        >
+          <CardContent className="p-8">
+          <div className="space-y-6">
+            
+            {/* ICON */}
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-3xl">
+              {item.icon}
+            </div>
+
+            {/* TITLE */}
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold leading-snug text-primary">
+                {item.title}
+              </h3>
+
+              {/* SUBTITLE */}
+              <p className="text-base font-semibold leading-relaxed text-secondary">
+                {item.subtitle}
               </p>
             </div>
 
-            <div className="mx-auto mt-10 max-w-2xl rounded-3xl bg-primary p-8 shadow-2xl">
-              <LeadForm
-                bottomText={(<>📞 +91 98113 04306 | +91 98119 54834 
-                <br /> 📧 info@confur.net | confur.india@gmail.com 🌐 www.confur.net <br /> 
-                📍 Plot No. 34, New DLF Indl. Area, Faridabad, Haryana</>)}
-              />
+            {/* DESCRIPTION */}
+            <p className="text-lg leading-relaxed text-slate-700">
+              {item.desc}
+            </p>
+          </div>              
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* SECTION 5 — TECHNICAL SPECIFICATIONS */}
+<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
+  {/* Background Grid */}
+  <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
+
+  <div className="container relative z-10 mx-auto max-w-7xl px-4">
+
+    {/* HEADING */}
+    <h2 className="text-3xl md:text-4xl font-bold leading-tight text-secondary">
+      Technical Specifications
+    </h2>
+
+    {/* MAIN GRID */}
+    <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[65%_35%] items-start">
+
+      {/* LEFT TABLE */}
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-700 shadow-2xl">
+        <table className="w-full text-left">
+          <tbody>
+            {[
+              [
+                "Capacity Range",
+                "2 to 20 Tons (custom-built higher capacities available)",
+              ],
+              [
+                "Operating Temperature",
+                "Up to 1,200°C",
+              ],
+              [
+                "Mode of Heating",
+                "Gas / Oil / Electrical Fired",
+              ],
+              [
+                "Construction Material",
+                "Heavy-duty MS frame with refractory/ceramic fibre lining",
+              ],
+              [
+                "Bogie Drive",
+                "Manual or Motorised, depending on capacity",
+              ],
+              [
+                "Controls",
+                "Digital PID/PLC-based temperature control + thermocouple feedback",
+              ],
+              [
+                "Temperature Uniformity",
+                "±5°C across the chamber",
+              ],
+              [
+                "Atmosphere",
+                "Air atmosphere standard; inert gas purging provision available",
+              ],
+              [
+                "Customisation",
+                "Furnace design tailored for load size, capacity, and industrial application",
+              ],
+            ].map((row, i) => (
+              <tr
+                key={i}
+                className="border-b border-white/10 last:border-none"
+              >
+                <td className="w-[34%] bg-black/20 p-5 text-base font-bold text-secondary align-top">
+                  {row[0]}
+                </td>
+
+                <td className="p-5 text-base leading-relaxed text-white/90">
+                  {row[1]}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* RIGHT IMAGE + CTA */}
+      <div className="relative space-y-6">
+
+        {/* MOBILE CTA */}
+        <div className="lg:hidden">
+          <Button className="h-14 w-full rounded-xl bg-primary px-8 text-base font-bold text-white hover:bg-primary/90">
+            Download Full Technical Datasheet →
+          </Button>
+        </div>
+
+        {/* IMAGE */}
+        <div className="overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+          <Image
+            src={DEFAULT_PLACEHOLDER}
+            alt="Continental Bogie Hearth Furnace"
+            width={900}
+            height={1200}
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        {/* DESKTOP CTA */}
+        <div className="hidden lg:block">
+          <Button className="h-14 rounded-xl bg-primary px-8 text-base font-bold text-white hover:bg-primary/90">
+            Download Full Technical Datasheet →
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{/* SECTION 7 — ADVANTAGES */}
+<section className="py-24 bg-white w-full">
+  <div className="container mx-auto max-w-7xl px-4">
+
+    {/* HEADING */}
+    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
+      7 Reasons Plant Owners and Purchase Heads Choose Continental's Bogie Hearth Furnace
+    </h2>
+
+{/* ADVANTAGES LIST */}
+<div className="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-2">
+  {[
+    "Designed specifically for large and heavy components — not possible to process in any other standard furnace type",
+
+    "Movable bogie hearth ensures complete ease of material handling, loading, and unloading — even for the heaviest charges",
+
+    "Uniform heating across the entire chamber ensures consistent metallurgical results — batch after batch",
+
+    "Low operating cost due to energy-efficient ceramic fibre insulation and optimised heating systems",
+
+    "Strong, durable construction designed for continuous industrial use — not seasonal or light-duty applications",
+
+    "Flexible — tailored for different capacities, heating modes, and atmospheric requirements per your process",
+
+    "Proven performance across steel plants, foundries, forging units, and fabrication workshops across India",
+  ].map((item, i) => (
+    <div
+      key={i}
+      className="flex items-start gap-4 rounded-2xl border border-slate-300/80 bg-white/90 px-6 py-5"
+    >
+      {/* CHECK */}
+      <div className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+        ✓
+      </div>
+
+      {/* TEXT */}
+      <p className="text-base leading-relaxed text-slate-700">
+        {item}
+      </p>
+    </div>
+  ))}
+</div>
+</div>
+</section>
+
+{/* SECTION 8 — INDUSTRIES SERVED */}
+<section className="relative overflow-hidden bg-slate-200 py-24 w-full">
+  {/* Background Grid */}
+  <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
+
+  <div className="container relative z-10 mx-auto max-w-7xl px-4">
+
+    {/* HEADING */}
+    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
+      Industries We Serve
+    </h2>
+
+    {/* INDUSTRY CARDS */}
+    <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {[
+        {
+          icon: "🏭",
+          title: "Foundries & Casting Plants",
+          desc: "Heat treatment of heavy castings post-pour",
+        },
+        {
+          icon: "🔧",
+          title: "Forging & Press Shops",
+          desc: "Pre-heating + post-forging stress relieving",
+        },
+        {
+          icon: "🏗️",
+          title: "Steel Fabrication & Heavy Engineering",
+          desc: "Stress relieving of welded structures and large weldments",
+        },
+        {
+          icon: "⚙️",
+          title: "Metal Processing & Surface Treatment",
+          desc: "Annealing before surface treatment for better adhesion",
+        },
+        {
+          icon: "🚗",
+          title: "Automotive Component Manufacturers",
+          desc: "Large die sets, fixtures, and structural components",
+        },
+        {
+          icon: "🏠",
+          title: "Heat Treatment Contractors",
+          desc: "Batch jobs for multiple clients — flexible capacity configurations",
+        },
+        {
+          icon: "🔩",
+          title: "Tool Rooms & Precision Engineering",
+          desc: "Large dies, jigs, moulds requiring controlled heat treatment",
+        },
+      ].map((item, i) => (
+        <div
+          key={i}
+          className="rounded-3xl border border-white/10 bg-slate-700 p-7 shadow-2xl"
+        >
+          <div className="space-y-5">
+
+            {/* ICON */}
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-3xl">
+              {item.icon}
+            </div>
+
+            {/* CONTENT */}
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold leading-snug text-white">
+                {item.title}
+              </h3>
+
+              <p className="text-base leading-relaxed text-white/75">
+                {item.desc}
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* SECTION 9 — TRUST & CREDENTIALS */}
+<section className="py-24 bg-white w-full">
+  <div className="container mx-auto max-w-7xl px-4">
+
+    {/* HEADING */}
+    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
+      Trust & Credentials
+    </h2>
+
+    {/* MAIN GRID */}
+    <div className="mt-20 grid grid-cols-1 gap-10 lg:grid-cols-[34%_66%] items-start">
+
+      {/* LEFT STAT BADGES */}
+      <div className="space-y-5">
+        {[
+          {
+            icon: "🏆",
+            title: "Years in Operation",
+            value: "35+ Since 1987",
+          },
+          {
+            icon: "✅",
+            title: "Quality Certification",
+            value: "ISO 9001:2015 Certified",
+          },
+          {
+            icon: "🌿",
+            title: "Environmental",
+            value: "ISO 14001:2015 Certified",
+          },
+          {
+            icon: "📍",
+            title: "Manufacturing Base",
+            value: "Faridabad, Haryana — Pan-India Installation",
+          },
+        ].map((item, i) => (
+          <div
+            key={i}
+            className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-lg"
+          >
+            <div className="flex items-start gap-4">
+
+              {/* ICON */}
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-3xl">
+                {item.icon}
+              </div>
+
+              {/* CONTENT */}
+              <div className="space-y-1">
+                <h3 className="text-lg font-bold leading-snug text-primary">
+                  {item.title}
+                </h3>
+
+                <p className="text-base leading-relaxed text-slate-700">
+                  {item.value}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* RIGHT IMAGE + CAPTION */}
+      <div className="space-y-6 max-w-4xl">
+
+        {/* IMAGE */}
+        <div className="overflow-hidden rounded-3xl border border-slate-200 shadow-2xl">
+          <Image
+            src={DEFAULT_PLACEHOLDER}
+            alt="Continental Furnaces Manufacturing Facility"
+            width={1600}
+            height={900}
+            className="h-[420px] w-full object-cover"
+          />
+        </div>
+
+        {/* TEXT BELOW IMAGE */}
+        <div className="space-y-4">
+          <p className="text-base leading-relaxed text-slate-700 italic">
+            "Every Continental Bogie Hearth Furnace is engineered, fabricated, and tested at our Faridabad manufacturing facility before dispatch — with full installation and commissioning support at your plant."
+          </p>
+
+          <p className="text-lg font-semibold text-primary">
+            — Continental Furnaces, Since 1987
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{/* FINAL CTA */}
+<section className="py-24 bg-slate-200 relative overflow-hidden w-full">
+  <div className="container mx-auto px-4 max-w-7xl relative z-10">
+    
+    {/* TOP GRID */}
+    <div className="grid grid-cols-1 lg:grid-cols-[48%_52%] gap-14 items-start">
+      
+      {/* LEFT CONTENT */}
+      <div className="space-y-7 pt-6">
+        <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold text-primary">
+          Get Your Quote
+        </div>
+
+        <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
+          Need a Bogie Hearth Furnace for Your Plant? Tell Us Your Requirement.
+        </h2>
+
+        <p className="text-lg text-black max-w-2xl leading-relaxed">
+          Our furnace engineers will prepare a custom technical proposal with capacity, specifications, and indicative pricing within 24 hours — no obligation.
+          <br />
+          <br />
+          <br />
+          <span className="font-bold text-xl md:text-2xl text-primary">
+          Within 24 hours. Zero obligation.
+          </span>
+        </p>
+      </div>
+
+      {/* RIGHT FORM */}
+      <div className="w-full">
+        <LeadForm />
+      </div>
+    </div>
+
+    {/* CONTACT BLOCK */}
+    <div className="mt-20 rounded-3xl border border-slate-300 bg-white p-8 md:p-10 text-center shadow-xl">
+      <h3 className="text-2xl font-bold text-primary">
+        Continental Furnaces
+      </h3>
+
+      <p className="mt-5 text-base md:text-lg leading-relaxed text-slate-700 max-w-3xl mx-auto">
+        Plot No. 34, New DLF Industrial Area,
+        Faridabad, Haryana, India
+        <br />
+        <br />
+        📧 info@confur.net | confur.india@gmail.com
+        <br />
+        🌐 www.confur.net
+      </p>
+    </div>
+  </div>
+</section>
+
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/10 bg-slate-700 py-8 pb-28 text-white lg:pb-8">
-        <div className="container mx-auto max-w-7xl px-4 text-center text-sm text-white/60">
+      <footer className="bg-background text-white pt-8 pb-28 lg:py-8 w-full border-t border-white/10">
+        <div className="container mx-auto px-4 max-w-7xl text-center text-sm text-white/60">
           <p>
-            © {new Date().getFullYear()} Continental Furnaces. All Rights
-            Reserved.
+            © {new Date().getFullYear()} Continental Furnaces. All Rights Reserved.
           </p>
         </div>
       </footer>
 
-      {/* WHATSAPP */}
-      <a
-        href="https://wa.me/919811304306?text=Hi,%20I%20need%20a%20quote%20for%20a%20Bogie%20Hearth%20Furnace"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-24 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-2xl transition hover:scale-105"
-      >
-        <MessageCircle className="h-7 w-7" />
-      </a>
-
-      {/* MOBILE CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t bg-white p-4 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] lg:hidden">
-        <div className="mx-auto flex max-w-7xl gap-2 px-4">
-          <a
-            href="tel:+919811304306"
-            className="flex h-12 flex-1 items-center justify-center rounded-xl bg-slate-700 px-4 text-sm font-bold text-white"
-          >
-            📞 Call Now
-          </a>
-
+      {/* MOBILE STICKY CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden p-4 bg-white border-t shadow-[0_-4px_10px_rgba(0,0,0,0.1)] flex gap-2 w-screen">
+        <div className="w-full flex gap-2 max-w-7xl mx-auto px-4">
           <Button
-            className="h-12 flex-1 bg-primary font-bold text-white hover:bg-primary/90"
+            className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold h-12"
             onClick={() => {
               scrollToLeadForm()
             }}
           >
-            GET QUOTE
+            REQUEST FREE QUOTE NOW
           </Button>
         </div>
       </div>
