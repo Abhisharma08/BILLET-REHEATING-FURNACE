@@ -37,8 +37,9 @@ import LeadForm from "@/components/LeadForm"
 import SectionHeader from "@/components/SectionHeader"
 
 const LOGO_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg"
-const HERO_BG_URL = "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop"
+const HERO_BG_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779692266/WhatsApp_Image_2026-05-21_at_11.22.00_1_xr59xu.jpg"
 const DEFAULT_PLACEHOLDER = "https://picsum.photos/seed/furnace/1200/900"
+const Sec1_Img = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779692530/WhatsApp_Image_2026-05-21_at_11.22.03_fpbvis.jpg"
 
 export default function LandingPage() {
   const scrollToLeadForm = () => {
@@ -68,8 +69,8 @@ export default function LandingPage() {
     </span>
   </div> */}
 
-{/* NAVBAR */}
-<nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-slate-700/95 backdrop-blur-md overflow-x-hidden">
+{/* NAVBAR CODE */}
+<nav className="fixed top-0 w-full z-50 border-b border-slate-200 bg-white backdrop-blur-xl overflow-x-hidden">
   <div className="container mx-auto flex h-16 md:h-24 max-w-7xl items-center justify-between px-4">
     
     {/* LEFT */}
@@ -125,7 +126,7 @@ export default function LandingPage() {
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/75" />
+     <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/30" />
 
       {/* Grid Overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.4)_1px,transparent_1px)] bg-[size:60px_60px]" />
@@ -143,10 +144,9 @@ export default function LandingPage() {
 
               <h2 className="max-w-4xl text-2xl font-semibold leading-relaxed text-secondary md:text-2xl">
               Designed to meet the critical demands of the metal industry — 
-              <br />
-              ensuring efficient and precise heating for billets before forging, rolling, or extrusion. 
-              <br />
-              Consistent temperature control, uniform heating, and improved material properties for superior production quality.
+              <br /> <span className="italic text-secondary/90">
+              ensuring efficient and precise heating for billets before forging, rolling, or extrusion.
+              </span>
               </h2>
             </div>
 
@@ -221,11 +221,6 @@ export default function LandingPage() {
           <p>
             The Billet Reheating Furnace is designed to meet the critical demands of the metal industry — ensuring efficient and precise heating for billets before they undergo processes such as forging, rolling, or extrusion.
           </p>
-
-          <p>
-            These furnaces are essential in the preparation of billets for further shaping — offering consistent temperature control and uniform heating to improve material properties and overall production quality batch after batch.
-          </p>
-
           <p>
             Continental Furnaces is a globally recognised leader in the design, development, and manufacturing of high-performance billet reheating furnaces. From 10 TPH compact configurations to 120 TPH large-scale installations — every furnace is custom-engineered to your exact production requirements.
           </p>
@@ -243,7 +238,7 @@ export default function LandingPage() {
       <div className="relative">
         <div className="overflow-hidden rounded-3xl border border-slate-200 shadow-2xl">
           <Image
-            src={DEFAULT_PLACEHOLDER}
+            src={Sec1_Img}
             alt="Continental Billet Reheating Furnace"
             width={1200}
             height={1200}
@@ -647,11 +642,6 @@ export default function LandingPage() {
           title: "Wire Rod Mills",
           desc: "High-throughput billet reheating for wire and rod production",
         },
-        {
-          icon: Globe,
-          title: "Export-Oriented Units",
-          desc: "ISO-certified furnaces meeting international quality standards",
-        },
       ].map((item, i) => (
         <Card
           key={i}
@@ -681,88 +671,6 @@ export default function LandingPage() {
     </div>
   </div>
 </section>
-
-
-{/* SECTION 9 — TRUST & CREDENTIALS */}
-<section className="py-24 bg-slate-200 w-full">
-  <div className="container mx-auto max-w-7xl px-4">
-
-    {/* HEADING */}
-    <h2 className="max-w-5xl mx-auto text-center text-3xl md:text-4xl font-bold leading-tight text-primary">
-      Trust & Credentials
-    </h2>
-
-    {/* STATS GRID */}
-    <div className="mt-16 grid grid-cols-2 gap-6 lg:grid-cols-5">
-      {[
-        {
-          title: "Years in Operation",
-          value: "35+",
-        },
-        {
-          title: "Established",
-          value: "1987 — Faridabad",
-        },
-        {
-          title: "Max TPH Capacity",
-          value: "120",
-        },
-        {
-          title: "Product Lines",
-          value: "15+",
-        },
-        {
-          title: "Certification",
-          value: "ISO 9001 & 14001",
-        },
-      ].map((item, i) => (
-        <div
-          key={i}
-          className="rounded-3xl border border-slate-200 bg-slate-50 p-7 shadow-lg"
-        >
-          <div className="space-y-4">
-
-            {/* VALUE */}
-            <h3 className="text-3xl font-bold leading-none text-primary">
-              {item.value}
-            </h3>
-
-            {/* TITLE */}
-            <p className="text-base leading-relaxed text-slate-700">
-              {item.title}
-            </p>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    {/* CERTIFICATION BADGES */}
-    <div className="mt-16 flex flex-wrap items-center justify-center gap-5">
-      {[
-        "ISO 9001:2015 — Quality Management System",
-        "ISO 14001:2015 — Environmental Management",
-        "Since 1987 — 35+ Years Engineering Excellence",
-      ].map((item, i) => (
-        <div
-          key={i}
-          className="rounded-full border border-primary/20 bg-primary/10 px-7 py-4 text-sm font-semibold text-primary shadow-sm"
-        >
-          {item}
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
 
 
 {/* FINAL CTA */}
@@ -797,23 +705,6 @@ export default function LandingPage() {
       <div className="w-full">
         <LeadForm />
       </div>
-    </div>
-
-    {/* CONTACT BLOCK */}
-    <div className="mt-20 rounded-3xl border border-slate-300 bg-white p-8 md:p-10 text-center shadow-xl">
-      <h3 className="text-2xl font-bold text-primary">
-        Continental Furnaces
-      </h3>
-
-      <p className="mt-5 text-base md:text-lg leading-relaxed text-slate-700 max-w-3xl mx-auto">
-        Plot No. 34, New DLF Industrial Area,
-        Faridabad, Haryana, India
-        <br />
-        <br />
-         info@confur.net | confur.india@gmail.com
-        <br />
-         www.confur.net
-      </p>
     </div>
   </div>
 </section>
