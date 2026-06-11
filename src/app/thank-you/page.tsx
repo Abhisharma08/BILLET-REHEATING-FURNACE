@@ -81,7 +81,7 @@ gtag('event', 'conversion', {
           <div className="pt-6 border-t space-y-6">
             <div className="flex justify-center">
               <Link
-                href="/"
+                href="https://queries.confur.net/billet-reheating-furnace"
                 className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-primary/10"
               >
                 <ArrowLeft className="h-4 w-4" />
