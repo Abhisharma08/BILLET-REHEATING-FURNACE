@@ -81,12 +81,12 @@ gtag('event', 'conversion', {
 
           <div className="pt-6 border-t space-y-6">
             <div className="flex justify-center">
-              <Link href="/">
-                <Button variant="outline" className="gap-2 border-primary text-white">
+              <Button asChild variant="outline" className="gap-2 border-primary text-white">
+                <Link href="/" className="flex items-center justify-center gap-2">
                   <ArrowLeft className="h-4 w-4" />
                   Back to Homepage
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
