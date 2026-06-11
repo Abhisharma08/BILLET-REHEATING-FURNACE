@@ -2,9 +2,6 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   basePath: '/billet-reheating-furnace',
-  env: {
-    NEXT_PUBLIC_BASE_PATH: '/billet-reheating-furnace',
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
