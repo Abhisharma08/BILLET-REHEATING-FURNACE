@@ -79,14 +79,16 @@ gtag('event', 'conversion', {
             </p>
           </div>
 
-          <div className="pt-6 border-t space-y-6">
+            <div className="pt-6 border-t space-y-6">
             <div className="flex justify-center">
-              <Link href="/">
-                <Button variant="outline" className="gap-2 border-primary text-white">
-                  <ArrowLeft className="h-4 w-4" />
-                  Back to Homepage
+                <Button asChild variant="outline" className="gap-2 border-primary text-primary hover:bg-primary/5">
+                  <Link href="/" prefetch={false}>
+                    <span className="inline-flex items-center gap-2">
+                      <ArrowLeft className="h-4 w-4" />
+                      Back to Homepage
+                    </span>
+                  </Link>
                 </Button>
-              </Link>
             </div>
           </div>
         </div>
