@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
-import { Button } from "@/components/ui/button"
 import { CheckCircle2, ArrowLeft } from "lucide-react"
 
 const LOGO_URL = "https://res.cloudinary.com/dw9v7jjrq/image/upload/v1779361354/cropped-Continental-Furnaces-Logo_q8ict4.jpg";
@@ -81,12 +80,13 @@ gtag('event', 'conversion', {
 
           <div className="pt-6 border-t space-y-6">
             <div className="flex justify-center">
-              <Button asChild variant="outline" className="gap-2 border-primary text-white">
-                <Link href="/" className="flex items-center justify-center gap-2">
-                  <ArrowLeft className="h-4 w-4" />
-                  Back to Homepage
-                </Link>
-              </Button>
+              <Link
+                href="/"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-primary px-4 py-2 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-primary/10"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Homepage
+              </Link>
             </div>
           </div>
         </div>
