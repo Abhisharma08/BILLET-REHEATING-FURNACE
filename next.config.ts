@@ -2,7 +2,7 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   basePath: '/billet-reheating-furnace',
-  trailingSlash: false,
+   skipTrailingSlashRedirect: true,
   typescript: {
     ignoreBuildErrors: true,
   },
