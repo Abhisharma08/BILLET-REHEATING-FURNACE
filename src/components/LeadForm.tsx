@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { submitToHubSpot } from "@/app/actions/hubspot"
@@ -66,13 +67,14 @@ export default function LeadForm({
   buttonclassName = "",
   bottomText = <></>,
 }: LeadFormProps) {
+  const router = useRouter()
+
   const [values, setValues] = useState<FormValues>(defaultValues)
 
   const [errors, setErrors] = useState<FormErrors>({})
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const [isSuccess, setIsSuccess] = useState(false)
 
   function handleChange(
     event: React.ChangeEvent<
@@ -93,83 +95,45 @@ export default function LeadForm({
     }))
   }
 
-  async function handleSubmit(
-    event: React.FormEvent<HTMLFormElement>
-  ) {
-    event.preventDefault()
+async function handleSubmit(
+  event: React.FormEvent<HTMLFormElement>
+) {
+  event.preventDefault()
 
-    const validationErrors = validateForm(values)
+  const validationErrors = validateForm(values)
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      return
-    }
-
-    setErrors({})
-
-    setIsSubmitting(true)
-
-    try {
-      const result = await submitToHubSpot({
-        ...values,
-        designation: "",
-        furnace_requirement: "",
-        production_capacity: "",
-      })
-
-      if (!result.success) {
-        console.warn("CRM Sync Issue:", result.error)
-      }
-
-      setIsSuccess(true)
-    } catch (error) {
-      console.error("Submission Exception:", error)
-
-      setErrors({
-        submit:
-          "We encountered a problem. Please try again or contact us directly.",
-      })
-
-      setIsSubmitting(false)
-    }
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors)
+    return
   }
 
-  if (isSuccess) {
-    return (
-      <div
-        className={`rounded-2xl border border-white/10 bg-white p-8 shadow-2xl md:p-10 ${className}`}
-      >
-        <div className="flex flex-col items-center text-center">
-          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          </div>
+  setErrors({})
+  setIsSubmitting(true)
 
-          <h3 className="text-3xl font-bold text-primary md:text-4xl">
-            Thank You For Your Interest
-          </h3>
+  try {
+    const result = await submitToHubSpot({
+      ...values,
+      designation: "",
+      furnace_requirement: "",
+      production_capacity: "",
+    })
 
-          <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
-            Our engineering team has received your
-            requirement and will get in touch with
-            you shortly with the next steps.
-          </p>
-        </div>
-      </div>
-    )
+    if (!result.success) {
+      console.warn("CRM Sync Issue:", result.error)
+    }
+
+    router.push("/thank-you")
+  } catch (error) {
+    console.error("Submission Exception:", error)
+
+    setErrors({
+      submit:
+        "We encountered a problem. Please try again or contact us directly.",
+    })
+
+    setIsSubmitting(false)
   }
+}
 
   return (
     <div
