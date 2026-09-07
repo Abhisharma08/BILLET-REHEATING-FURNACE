@@ -4,25 +4,91 @@
  * HubSpot UPSERT Contact
  * - Creates contact if email does not exist
  * - Updates contact if email already exists
+ * - Supports two-step submissions (Step 1: Contact Info, Step 2: Furnace Details & Budget)
  */
 
-export async function submitToHubSpot(data: {
-  company_name: string;
+interface HubSpotPayload {
   name: string;
-  designation: string;
   email: string;
   phone: string;
-  furnace_requirement: string;
-  production_capacity: string;
-  lead_source: string;
-}) {
+  company_name?: string;
+  designation?: string;
+  lead_source?: string;
+  budget?: string;
+  custom_requirement?: string;
+  furnace_requirement?: string;
+  production_capacity?: string;
+  step?: number;
+}
+
+async function executeHubSpotRequest(
+  url: string,
+  method: 'POST' | 'PATCH',
+  accessToken: string,
+  properties: Record<string, string>
+) {
+  let currentProps = { ...properties };
+  let response = await fetch(url, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ properties: currentProps }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null);
+
+    // If custom properties do not exist in the HubSpot portal, strip and retry
+    if (response.status === 400 && errorData?.errors?.length) {
+      const invalidProps: string[] = [];
+      for (const err of errorData.errors) {
+        if (err.errorType === 'PROPERTY_DOESNT_EXIST') {
+          const match = err.message?.match(/Property "([^"]+)" does not exist/);
+          if (match && match[1]) {
+            invalidProps.push(match[1]);
+          }
+        }
+      }
+
+      if (invalidProps.length > 0) {
+        console.warn(
+          `HubSpot: Removing properties [${invalidProps.join(', ')}] not found in portal and retrying...`
+        );
+        for (const prop of invalidProps) {
+          delete currentProps[prop];
+        }
+
+        response = await fetch(url, {
+          method,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({ properties: currentProps }),
+        });
+
+        if (response.ok) {
+          return { ok: true, data: await response.json().catch(() => ({})) };
+        }
+      }
+    }
+
+    return {
+      ok: false,
+      error: errorData?.message || `HubSpot request failed with status ${response.status}`,
+    };
+  }
+
+  return { ok: true, data: await response.json().catch(() => ({})) };
+}
+
+export async function submitToHubSpot(data: HubSpotPayload) {
   const accessToken = process.env.HUBSPOT_ACCESS_TOKEN;
 
   if (!accessToken) {
-    console.error(
-      'HUBSPOT_ACCESS_TOKEN is not configured.'
-    );
-
+    console.error('HUBSPOT_ACCESS_TOKEN is not configured.');
     return {
       success: false,
       error: 'Server configuration error.',
@@ -30,135 +96,112 @@ export async function submitToHubSpot(data: {
   }
 
   try {
-    const [firstname, ...lastnameParts] =
-      data.name.trim().split(/\s+/);
-
+    const [firstname, ...lastnameParts] = data.name.trim().split(/\s+/);
     const lastname = lastnameParts.join(' ');
 
     /**
-     * =====================================
-     * CONTACT PROPERTIES
-     * =====================================
+     * Build combined requirements summary to ensure details are preserved
+     * even if custom portal properties (budget/custom_requirement) are not configured.
      */
+    const summaryParts: string[] = [];
+    if (data.budget) {
+      summaryParts.push(`Budget: ${data.budget}`);
+    }
+    if (data.custom_requirement) {
+      summaryParts.push(`Requirement: ${data.custom_requirement}`);
+    }
+    if (data.step === 1) {
+      summaryParts.push('(Step 1 completed)');
+    } else if (data.step === 2) {
+      summaryParts.push('(Step 2 completed)');
+    }
 
-    const properties = {
-      email: data.email,
-
-      firstname: firstname,
-
-      lastname: lastname || '',
-
-      phone: data.phone,
-
-      company: data.company_name || '',
-
-      jobtitle: data.designation || '',
-
-      lead_source: data.lead_source || '',
-
-      furnace_requirement:
-        data.furnace_requirement || '',
-
-      production_capacity:
-        data.production_capacity || '',
-    };
+    const furnaceRequirementSummary =
+      data.furnace_requirement || summaryParts.join(' | ');
 
     /**
-     * =====================================
-     * STEP 1 — SEARCH CONTACT BY EMAIL
-     * =====================================
+     * CONTACT PROPERTIES
      */
+    const properties: Record<string, string> = {
+      email: data.email.trim(),
+      firstname: firstname || '',
+      lastname: lastname || '',
+      phone: data.phone.trim(),
+      lead_source: data.lead_source || 'BILLET REHEATING FURNACE LP',
+    };
 
+    if (data.company_name) {
+      properties.company = data.company_name.trim();
+    }
+    if (data.designation) {
+      properties.jobtitle = data.designation.trim();
+    }
+    if (furnaceRequirementSummary) {
+      properties.furnace_requirement = furnaceRequirementSummary;
+    }
+    if (data.budget) {
+      properties.budget = data.budget;
+    }
+    if (data.custom_requirement) {
+      properties.custom_requirement = data.custom_requirement.trim();
+    }
+
+    /**
+     * STEP 1 — SEARCH CONTACT BY EMAIL
+     */
     const searchResponse = await fetch(
       'https://api.hubapi.com/crm/v3/objects/contacts/search',
       {
         method: 'POST',
-
         headers: {
           'Content-Type': 'application/json',
-
           Authorization: `Bearer ${accessToken}`,
         },
-
         body: JSON.stringify({
           filterGroups: [
             {
               filters: [
                 {
                   propertyName: 'email',
-
                   operator: 'EQ',
-
-                  value: data.email,
+                  value: data.email.trim(),
                 },
               ],
             },
           ],
-
           properties: ['email'],
         }),
       }
     );
 
     if (!searchResponse.ok) {
-      const errorData = await searchResponse.json();
-
-      console.error(
-        'HubSpot Search Error:',
-        errorData
-      );
-
+      const errorData = await searchResponse.json().catch(() => null);
+      console.error('HubSpot Search Error:', errorData);
       return {
         success: false,
-        error:
-          errorData.message ||
-          'Failed to search HubSpot contact.',
+        error: errorData?.message || 'Failed to search HubSpot contact.',
       };
     }
 
     const searchData = await searchResponse.json();
-
-    const existingContact =
-      searchData.results?.[0];
+    const existingContact = searchData.results?.[0];
 
     /**
-     * =====================================
      * STEP 2 — UPDATE EXISTING CONTACT
-     * =====================================
      */
-
     if (existingContact) {
-      const updateResponse = await fetch(
+      const result = await executeHubSpotRequest(
         `https://api.hubapi.com/crm/v3/objects/contacts/${existingContact.id}`,
-        {
-          method: 'PATCH',
-
-          headers: {
-            'Content-Type': 'application/json',
-
-            Authorization: `Bearer ${accessToken}`,
-          },
-
-          body: JSON.stringify({
-            properties,
-          }),
-        }
+        'PATCH',
+        accessToken,
+        properties
       );
 
-      if (!updateResponse.ok) {
-        const errorData =
-          await updateResponse.json();
-
-        console.error(
-          'HubSpot Update Error:',
-          errorData
-        );
-
+      if (!result.ok) {
+        console.error('HubSpot Update Error:', result.error);
         return {
           success: false,
-          error:
-            errorData.message ||
-            'Failed to update contact.',
+          error: result.error || 'Failed to update contact.',
         };
       }
 
@@ -169,42 +212,20 @@ export async function submitToHubSpot(data: {
     }
 
     /**
-     * =====================================
      * STEP 3 — CREATE NEW CONTACT
-     * =====================================
      */
-
-    const createResponse = await fetch(
+    const result = await executeHubSpotRequest(
       'https://api.hubapi.com/crm/v3/objects/contacts',
-      {
-        method: 'POST',
-
-        headers: {
-          'Content-Type': 'application/json',
-
-          Authorization: `Bearer ${accessToken}`,
-        },
-
-        body: JSON.stringify({
-          properties,
-        }),
-      }
+      'POST',
+      accessToken,
+      properties
     );
 
-    if (!createResponse.ok) {
-      const errorData =
-        await createResponse.json();
-
-      console.error(
-        'HubSpot Create Error:',
-        errorData
-      );
-
+    if (!result.ok) {
+      console.error('HubSpot Create Error:', result.error);
       return {
         success: false,
-        error:
-          errorData.message ||
-          'Failed to create contact.',
+        error: result.error || 'Failed to create contact.',
       };
     }
 
@@ -213,15 +234,10 @@ export async function submitToHubSpot(data: {
       action: 'created',
     };
   } catch (error) {
-    console.error(
-      'HubSpot Submission Exception:',
-      error
-    );
-
+    console.error('HubSpot Submission Exception:', error);
     return {
       success: false,
-      error:
-        'Internal server error during CRM sync.',
+      error: 'Internal server error during CRM sync.',
     };
   }
 }

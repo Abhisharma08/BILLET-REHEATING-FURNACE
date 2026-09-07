@@ -1,8 +1,10 @@
 import type {NextConfig} from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   basePath: '/billet-reheating-furnace',
   skipTrailingSlashRedirect: true,
+  outputFileTracingRoot: path.join(__dirname),
   typescript: {
     ignoreBuildErrors: true,
   },
