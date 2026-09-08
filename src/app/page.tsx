@@ -84,6 +84,7 @@ export default function LandingPage() {
           width={180}
           height={55}
           className="h-10 md:h-14 w-auto object-contain"
+          className="h-12 md:h-20 w-auto object-contain"
           priority
         />
       </Link>
@@ -112,8 +113,10 @@ export default function LandingPage() {
 </nav>
 
   <main className="pt-[64px] md:pt-[96px] pb-24 lg:pb-0 w-full">
+  <main className="pt-[64px] md:pt-[64px] pb-24 lg:pb-0 w-full">
     {/* HERO SECTION */}
     <section className="relative overflow-hidden bg-background py-20 lg:py-28 w-full">
+    <section className="relative overflow-hidden bg-background py-12 lg:py-20 w-full">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
